@@ -1,0 +1,111 @@
+/* eslint-disable  func-names */
+/* eslint-disable  no-console */
+
+const Alexa = require('ask-sdk');
+
+const GetNewFactHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'LaunchRequest'
+      || (request.type === 'IntentRequest'
+        && request.intent.name === 'ScheduleInformation');
+  },
+  handle(handlerInput) {
+    
+    var speechOutput = FB_schedule;
+    // if (WhichSport == "basketball") {
+    //   speechOutput = BSKT_scheudle;
+    // }
+    // else if (WhichSport == "football") {
+    //   speechOutput = FB_schedule;
+    // }
+    // else {
+    //   speechOutput = FB_lastgame;
+    // }
+
+    return handlerInput.responseBuilder
+      .speak(speechOutput)
+      .withSimpleCard(SKILL_NAME, speechOutput)
+      .getResponse();
+  },
+};
+
+const HelpHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'IntentRequest'
+      && request.intent.name === 'AMAZON.HelpIntent';
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak(HELP_MESSAGE)
+      .reprompt(HELP_REPROMPT)
+      .getResponse();
+  },
+};
+
+const ExitHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'IntentRequest'
+      && (request.intent.name === 'AMAZON.CancelIntent'
+        || request.intent.name === 'AMAZON.StopIntent');
+  },
+  handle(handlerInput) {
+    return handlerInput.responseBuilder
+      .speak(STOP_MESSAGE)
+      .getResponse();
+  },
+};
+
+const SessionEndedRequestHandler = {
+  canHandle(handlerInput) {
+    const request = handlerInput.requestEnvelope.request;
+    return request.type === 'SessionEndedRequest';
+  },
+  handle(handlerInput) {
+    console.log(`Session ended with reason: ${handlerInput.requestEnvelope.request.reason}`);
+
+    return handlerInput.responseBuilder.getResponse();
+  },
+};
+
+const ErrorHandler = {
+  canHandle() {
+    return true;
+  },
+  handle(handlerInput, error) {
+    console.log(`Error handled: ${error.message}`);
+
+    return handlerInput.responseBuilder
+      .speak('Sorry, an error occurred.')
+      .reprompt('Sorry, an error occurred.')
+      .getResponse();
+  },
+};
+
+const SKILL_NAME = 'Sooner Sports';
+
+const HELP_MESSAGE = 'You can ask for the last game or future schedule for basketball or football. Or you can say exit';
+const HELP_REPROMPT = 'What can I help you with?';
+const STOP_MESSAGE = 'Goodbye!';
+
+//const WhichSport = this.event.request.intent.slots.WhichSport.value;
+//const NextOrLast = this.event.request.intent.slots.NextOrLast.value;
+
+//var FB_lastgame = "Oklahoma football defeated Texas in their last game, 39 to 27.";
+//var BSKT_lastgame = "The Oklahoma basketball team won their last game against Witchita State, 80 to 48.";
+var FB_schedule = "Here is the 2019 football schedule: South Dakota. UCLA. Bye week. Texas Tech. Kansas. Texas. West Virginia. Kansas State. Iowa State. Baylor. TCU. Oklahoma State.";
+//var BSKT_scheudle = "Here is upcoming basketball schedule: USC. Creighton. Northwestern. Kansas. Oklahoma State. Texas Tech. TCU. Texas";
+
+const skillBuilder = Alexa.SkillBuilders.standard();
+
+exports.handler = skillBuilder
+  .addRequestHandlers(
+    GetNewFactHandler,
+    HelpHandler,
+    ExitHandler,
+    SessionEndedRequestHandler
+  )
+  .addErrorHandlers(ErrorHandler)
+  .lambda();
