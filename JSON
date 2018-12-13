@@ -1,0 +1,154 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "sooner sports",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ScheduleInformation",
+                    "slots": [
+                        {
+                            "name": "WhichSport",
+                            "type": "WhichSport",
+                            "samples": [
+                                "basketball team",
+                                "football team",
+                                "basketball",
+                                "football"
+                            ]
+                        },
+                        {
+                            "name": "ScheduleOrLastGame",
+                            "type": "ScheduleOrLastGame",
+                            "samples": [
+                                "schedule",
+                                "last game"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "ask Sooner Sports about {WhichSport} {ScheduleOrLastGame}",
+                        "Alexa {ScheduleOrLastGame} for {WhichSport}",
+                        "Alexa {WhichSport} {ScheduleOrLastGame}",
+                        "tell me {ScheduleOrLastGame} for Oklahoma {WhichSport}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": [
+                {
+                    "name": "WhichSport",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "football"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "basketball"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "ScheduleOrLastGame",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "last game",
+                                "synonyms": [
+                                    "previous game",
+                                    "most recent game",
+                                    "yesterday's game"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Schedule",
+                                "synonyms": [
+                                    "future schedule",
+                                    "upcoming schedule",
+                                    "play next",
+                                    "next game"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "ScheduleInformation",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "WhichSport",
+                            "type": "WhichSport",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.744190917656.1302270094063"
+                            }
+                        },
+                        {
+                            "name": "ScheduleOrLastGame",
+                            "type": "ScheduleOrLastGame",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.744190917656.161045652336"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.744190917656.1302270094063",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want football or basketball information?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.744190917656.161045652336",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Are you asking about the score of the last game or about the future schedule?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Do you want upcoming schedule or result from the last game?"
+                    }
+                ]
+            }
+        ]
+    }
+}
